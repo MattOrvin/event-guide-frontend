@@ -3,12 +3,6 @@ import EventList from './EventList'
 // import EventItem from './EventItem'
 import Search from './Search'
 
-// First, let's get stuff to display on this page
-// We'll need to iterate over the objects that our API returns and make individual components 
-// out of them, which we'll render and set as the state
-// Before using the API, try using some dummy data 
-
-
 class HomePage extends Component {
     constructor(props){
         super(props)
@@ -26,23 +20,35 @@ class HomePage extends Component {
 
     handleChange = (searchQuery) => {
         console.log(searchQuery)
-        this.setState({
-            searchTerm: searchQuery
-        })
-        // Take the searchQuery object and use it to make a new GET fetch request, then update the state
+        fetch(`https://www.eventbriteapi.com/v3/events/search/?q=${searchQuery.keyword}&location.address=${searchQuery.location}&categories=110&token=4VKKBMR6XULWQVBCNW3H`)
+            .then(resp => resp.json())
+            .then(newEventData => this.showEvents(newEventData.events))
     }
 
-    showSearchResults(){
-        fetch(`https://www.eventbriteapi.com/v3/events/search/?q=${this.state.searchTerm}categories=110&token=4VKKBMR6XULWQVBCNW3H`)
-            .then(resp => resp.json())
-            .then(eventData => console.log(eventData))
+    saveFunction = (eventData) => {
+            fetch(`http://localhost:3000/events`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                eventbrite_id: eventData.id,
+                venue_id: eventData.venue_id,
+                name: eventData.name.text
+            }),
+        })
+          .then(resp => resp.json())
+          .then(saveData => console.log(saveData))
     }
+
+    // Take the searchQuery object and use it to make a new GET fetch request, then update the state
     
     componentDidMount(){
         fetch(`https://www.eventbriteapi.com/v3/events/search/?categories=110&token=4VKKBMR6XULWQVBCNW3H`)
             .then(resp => resp.json())
             .then(eventData => this.setState({eventData: eventData.events}))
-            .then(error => console.log(error))
+            .catch(error => console.log(error))
     }
 
     render(){
@@ -50,7 +56,7 @@ class HomePage extends Component {
         <div>
             <h1>Hello there</h1>
             <Search handleChange={this.handleChange}/>
-            {this.state.eventData.length > 0 ? <EventList events={this.state.eventData}/> : "loading"}
+            {this.state.eventData.length ? <EventList events={this.state.eventData} saveFunction={this.saveFunction}/> : "loading"}
         </div>
         )
     }

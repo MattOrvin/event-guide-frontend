@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { FormControl, FormGroup } from 'react-bootstrap';
-
 
 class Search extends Component {
     constructor(){
@@ -14,7 +12,7 @@ class Search extends Component {
 
     updateEvent = (event) => {
         this.setState({
-            [event.target.id]: event.target.value
+            [event.target.name]: event.target.value
         })
     }
 
@@ -25,32 +23,20 @@ class Search extends Component {
 
     render(){
     return(
-        <div className="filter">
-            <form onSubmit={this.submitForm}>
-                <FormGroup controlId="keyword">
-                <FormControl onChange={this.updateEvent}
-                    type="text"
-                    placeholder="Search by Keywords"
-                />
-                </FormGroup>
-                <br></br>
-                <FormGroup controlId="date">
-                <FormControl onChange={this.updateEvent}
-                    type="text"
-                    placeholder="Search by Date"
-                />
-                </FormGroup>
-                <br></br>
-                <FormGroup controlId="location">
-                <FormControl onChange={this.updateEvent}
-                    type="text"
-                    placeholder="Search by Location"
-                />
-                </FormGroup>
-                <button type="submit">Submit</button>
-            </form>
-        </div>
-    )
+        <form onSubmit={this.submitForm}>
+            <label>
+                Keyword(s):
+            </label>
+            <input name="keyword" type="text" value={this.state.keyword} onChange={this.updateEvent} />
+            <br />
+            <label>
+                Location:
+            </label>
+            <input name="location" type="text" value={this.state.location} onChange={this.updateEvent}/>
+            <br />
+            <input type="submit" value="Submit" />
+        </form>
+        )
     }
 }
 
