@@ -27,14 +27,24 @@ class Search extends Component {
             <label>
                 Keyword(s):
             </label>
-            <input name="keyword" type="text" value={this.state.keyword} onChange={this.updateEvent} />
+            <input 
+                name="keyword" 
+                type="text" 
+                value={this.state.keyword} 
+                onChange={this.updateEvent} />
             <br />
             <label>
                 Location:
             </label>
-            <input name="location" type="text" value={this.state.location} onChange={this.updateEvent}/>
+            <input 
+                name="location" 
+                type="text" 
+                value={this.state.location} 
+                onChange={this.updateEvent}/>
             <br />
-            <input type="submit" value="Submit" />
+            <input 
+                type="submit" 
+                value="Submit" />
         </form>
         )
     }
