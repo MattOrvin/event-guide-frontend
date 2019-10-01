@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import EventList from "./EventList";
 // import EventItem from './EventItem'
 import Search from "./Search";
+import UserShow from './UserShow'
+import EventShow from './EventShow'
 
 class HomePage extends Component {
   constructor(props) {
@@ -62,8 +64,9 @@ class HomePage extends Component {
   render() {
     return (
       <div>
-        <button onClick={this.props.handleLogoutClick}>Log Out</button>
         <h1>Welcome</h1>
+        <UserShow />
+        <EventShow />
         <Search handleChange={this.handleChange} />
         {this.state.eventData.length ? (
           <EventList

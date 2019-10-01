@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { Component } from 'react';
+import CommentContainer from './CommentContainer'
 
-const EventShow = () => {
-    // pass in event info as props and display it here
-    // 2-3 more components to render comments and comment forms
-    return <h1>Event Show Page</h1>
+class EventShow extends Component {
+    render(){
+        return(
+            <div>
+                <h3>event show page here</h3>
+                <p>event info here (name, date, location, price, description)</p>
+                <CommentContainer />
+            </div>
+        )
+    }
 }
 
 export default EventShow

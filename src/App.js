@@ -3,7 +3,8 @@ import './App.css';
 import HomePage from './components/HomePage'
 import Signup from './components/Signup'
 import Signin from './components/Signin'
-import 'bootstrap/dist/css/bootstrap.min.css';
+import NavBar from "./components/NavBar";
+
 
 class App extends Component {
   constructor(props){
@@ -15,9 +16,6 @@ class App extends Component {
 }
 
 componentDidMount(){
-  // make a call to /current_user with the token as a header
-  // that endpoint will send back the user if it's a valid token
-  // when it comes back you'll update the this.state.currentUser with the user that came back
   const token = localStorage.token
   if(token){
     fetch(`http://localhost:3000/profile`, {
@@ -36,6 +34,8 @@ componentDidMount(){
     })
   }
 }
+
+
 
 userPostFetch = (userData) => {
   const token = localStorage.token;
@@ -131,20 +131,28 @@ getProfileFetch = () => {
       currentUser: ''
     })
   }
-
-    render(){
-    return (
-      <div className="App">
-        <Signup userPostFetch={this.userPostFetch}/>
-        <Signin userLoginFetch={this.userLoginFetch}/>
-        <HomePage 
-          currentUser={this.currentUser} 
-          loggedIn={this.loggedIn} 
-          handleLogoutClick={this.handleLogoutClick}
-          currentUser={this.state.currentUser}
-          userLoginFetch={this.state.userLoginFetch}/>
-      </div>
-    )};
+  
+  render = () => {
+    if(this.state.loggedIn) {
+      return (
+        <div className="App">
+          <NavBar handleLogoutClick={this.handleLogoutClick} />
+          <HomePage 
+            currentUser={this.currentUser} 
+            loggedIn={this.loggedIn} 
+            handleLogoutClick={this.handleLogoutClick}
+            currentUser={this.state.currentUser}
+            userLoginFetch={this.state.userLoginFetch}/>
+        </div>
+      )} else {
+        return (
+          <div className="App">
+            <Signup userPostFetch={this.userPostFetch}/>
+            <Signin userLoginFetch={this.userLoginFetch}/>
+          </div>
+        )
+      }
+  }
 }
 
 export default App;
