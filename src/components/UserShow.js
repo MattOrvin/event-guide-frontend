@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import EventItem from './EventItem';
 
 class UserShow extends Component {
     constructor(){
         super()
         this.state = {
             userData: '',
-            userEventData: ''
+            userEventData: []
         }
     }
     
@@ -26,19 +27,30 @@ class UserShow extends Component {
             }
         })
         .then(resp => resp.json())
-        .then(data => this.setState({ userEventData: data}))
+        .then(data => {
+            this.setState({ userEventData: data.events})
+        })
+    }
+
+    displayEventItem = () => {
+        return this.state.userEventData.map(event => <EventItem event={event}/>)
     }
 
     render(){
         let user = this.state.userData.user;
-        console.log(this.state.userEventData.events)
-        // console.log(this.state.userData.user.events)
+        // let userEvents = this.state.userEventData.map((event) => {
+        //     return <EventItem key={event.id} event={event} />
+        // })
+        // let mappedUserEvents = userEvents.map((event) => {
+            
+        // })
+        // console.log(userEvents)
         return(
             this.state.userData === "" ? 
             <div>Loading...</div> :
             <div>
                 <p>{user.name}</p>
-                <p>User's event items</p>
+                {this.displayEventItem()}
             </div>
         )
     }

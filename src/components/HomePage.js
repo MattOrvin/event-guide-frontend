@@ -10,7 +10,14 @@ class HomePage extends Component {
     super(props);
     this.state = {
       eventData: [],
-      searchTerm: ""
+      searchTerm: "",
+      showPage: {
+          name: "",
+          logo: "",
+          summary: "",
+          start: "",
+          end: ""
+        }
     };
   }
 
@@ -19,6 +26,19 @@ class HomePage extends Component {
       eventData: events
     });
   };
+
+  handleShowClick = (clickedObj) => {
+      console.log(clickedObj)
+      this.setState({
+          showPage: {
+              name: clickedObj.name.text,
+              logo: clickedObj.logo.original.url,
+              summary: clickedObj.summary,
+              start: clickedObj.start.local,
+              end: clickedObj.end.local
+          }
+        })
+  }
 
   handleChange = searchQuery => {
     console.log(searchQuery);
@@ -30,7 +50,6 @@ class HomePage extends Component {
   };
 
   saveFunction = eventData => {
-    debugger;
     const token = localStorage.getItem("token");
     fetch(`http://localhost:3000/events`, {
       method: "POST",
@@ -43,7 +62,11 @@ class HomePage extends Component {
         eventbrite_id: eventData.id,
         eventbrite_venue_id: eventData.venue_id,
         name: eventData.name.text,
-        user_id: this.props.currentUser.user.id
+        user_id: this.props.currentUser.user.id,
+        logo: eventData.logo.original.url,
+        start: eventData.start.local,
+        end: eventData.end.local,
+        summary: eventData.summary
       })
     })
       .then(resp => resp.json())
@@ -75,12 +98,13 @@ class HomePage extends Component {
             return(
                 <div>
                     <h1>Welcome</h1>
-                    <EventShow />
+                    <EventShow showPage={this.state.showPage}/>
                     <Search handleChange={this.handleChange} />
                     {this.state.eventData.length ? (
                     <EventList
                         events={this.state.eventData}
                         saveFunction={this.saveFunction}
+                        handleShowClick={this.handleShowClick}
                     />
                     ) : (
                     "loading"
