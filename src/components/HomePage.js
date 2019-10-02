@@ -10,7 +10,7 @@ class HomePage extends Component {
     super(props);
     this.state = {
       eventData: [],
-      searchTerm: "",
+      searchTerm: ""
     };
   }
 
@@ -30,6 +30,7 @@ class HomePage extends Component {
   };
 
   saveFunction = eventData => {
+    debugger;
     const token = localStorage.getItem("token");
     fetch(`http://localhost:3000/events`, {
       method: "POST",
@@ -61,24 +62,33 @@ class HomePage extends Component {
         }
     }
 
-  render() {
-    return (
-      <div>
-        <h1>Welcome</h1>
-        <UserShow />
-        <EventShow />
-        <Search handleChange={this.handleChange} />
-        {this.state.eventData.length ? (
-          <EventList
-            events={this.state.eventData}
-            saveFunction={this.saveFunction}
-          />
-        ) : (
-          "loading"
-        )}
-      </div>
-    );
-  }
+  render = () => {
+    if(this.props.selectedUser){
+        return (
+            <div>
+                <UserShow 
+                    currentUser={this.props.currentUser}
+                    selectedUser={this.props.selectedUser}/>
+            </div>
+        );
+        } else {
+            return(
+                <div>
+                    <h1>Welcome</h1>
+                    <EventShow />
+                    <Search handleChange={this.handleChange} />
+                    {this.state.eventData.length ? (
+                    <EventList
+                        events={this.state.eventData}
+                        saveFunction={this.saveFunction}
+                    />
+                    ) : (
+                    "loading"
+                    )}
+                </div>
+            )
+        }
+    }
 }
 
 export default HomePage;

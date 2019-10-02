@@ -11,7 +11,8 @@ class App extends Component {
   super(props)
   this.state = {
     loggedIn: false,
-    currentUser: ''
+    currentUser: '',
+    selectedUser: null
   }
 }
 
@@ -34,8 +35,6 @@ componentDidMount(){
     })
   }
 }
-
-
 
 userPostFetch = (userData) => {
   const token = localStorage.token;
@@ -131,14 +130,30 @@ getProfileFetch = () => {
       currentUser: ''
     })
   }
+
+  chooseUser = (event) => {
+    this.setState({
+      selectedUser: this.state.currentUser.user.id
+    })
+  }
+
+  handleHomeClick = () => {
+    this.setState({
+      selectedUser: null
+    })
+  }
   
   render = () => {
     if(this.state.loggedIn) {
       return (
         <div className="App">
-          <NavBar handleLogoutClick={this.handleLogoutClick} />
+          <NavBar 
+            handleHomeClick={this.handleHomeClick}
+            handleLogoutClick={this.handleLogoutClick}
+            chooseUser={this.chooseUser} 
+            selectedUser={this.state.selectedUser}/>
           <HomePage 
-            currentUser={this.currentUser} 
+            selectedUser={this.state.selectedUser}
             loggedIn={this.loggedIn} 
             handleLogoutClick={this.handleLogoutClick}
             currentUser={this.state.currentUser}

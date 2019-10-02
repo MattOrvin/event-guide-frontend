@@ -6,8 +6,8 @@ class NavBar extends Component {
         <div>
             <h1>NavBar here</h1>
             <button onClick={this.props.handleLogoutClick}>Log Out</button>
-            <button> Home button placeholder </button>
-            <button> Profile button placeholder </button>
+            <button onClick={this.props.handleHomeClick}> Home </button>
+            <button onClick={this.props.chooseUser}> Your Profile </button>
         </div>
     )
     }
