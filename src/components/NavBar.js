@@ -1,15 +1,25 @@
 import React, { Component } from 'react';
+import { Menu } from 'semantic-ui-react'
 
 class NavBar extends Component {
     render(){
     return(
-        <div>
-            <h1>NavBar here</h1>
-            <button onClick={this.props.handleLogoutClick}>Log Out</button>
-            <button onClick={this.props.handleHomeClick}> Home </button>
-            <button onClick={this.props.chooseUser}> Your Profile </button>
-        </div>
-    )
+        <Menu color='green'>
+            <Menu.Item 
+                name='Profile'
+                onClick={this.props.chooseUser}
+            />
+            
+            <Menu.Item 
+                name='Home'
+                onClick={this.props.handleHomeClick}
+            />
+            <Menu.Item
+                name='Log Out'
+                onClick={this.props.handleLogoutClick}
+            />
+        </Menu>
+        )
     }
 }
 

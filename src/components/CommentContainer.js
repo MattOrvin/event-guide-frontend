@@ -17,7 +17,7 @@ class CommentContainer extends Component {
     render(){
         return(
             <div>
-                <h3>Comment Container</h3>
+                {/* <h3>Comment Container</h3> */}
                 <CommentItem />
             </div>
         )

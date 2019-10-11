@@ -38,18 +38,13 @@ class UserShow extends Component {
 
     render(){
         let user = this.state.userData.user;
-        // let userEvents = this.state.userEventData.map((event) => {
-        //     return <EventItem key={event.id} event={event} />
-        // })
-        // let mappedUserEvents = userEvents.map((event) => {
-            
-        // })
-        // console.log(userEvents)
         return(
             this.state.userData === "" ? 
             <div>Loading...</div> :
             <div>
-                <p>{user.name}</p>
+                <h1>{user.name}</h1>
+                <h3>Saved Events:</h3>
+                <br></br>
                 {this.displayEventItem()}
             </div>
         )

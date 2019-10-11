@@ -5,6 +5,8 @@ import Search from "./Search";
 import UserShow from './UserShow'
 import EventShow from './EventShow'
 
+const API_KEY = process.env.REACT_APP_EVENTBRITE_API_KEY;
+
 class HomePage extends Component {
   constructor(props) {
     super(props);
@@ -43,7 +45,7 @@ class HomePage extends Component {
   handleChange = searchQuery => {
     console.log(searchQuery);
     fetch(
-      `https://www.eventbriteapi.com/v3/events/search/?q=${searchQuery.keyword}&location.address=${searchQuery.location}&categories=110&token=4VKKBMR6XULWQVBCNW3H`
+      `https://www.eventbriteapi.com/v3/events/search/?q=${searchQuery.keyword}&location.address=${searchQuery.location}&categories=110&token=${API_KEY}`
     )
       .then(resp => resp.json())
       .then(newEventData => this.showEvents(newEventData.events));
@@ -78,7 +80,7 @@ class HomePage extends Component {
   componentDidMount() {
     const token = localStorage.getItem("token");
     if(token){
-        return fetch(`https://www.eventbriteapi.com/v3/events/search/?categories=110&token=4VKKBMR6XULWQVBCNW3H`)
+        return fetch(`https://www.eventbriteapi.com/v3/events/search/?categories=110&token=${API_KEY}`)
             .then(resp => resp.json())
             .then(eventData => this.setState({ eventData: eventData.events }))
             .catch(error => console.log(error));
@@ -97,7 +99,7 @@ class HomePage extends Component {
         } else {
             return(
                 <div>
-                    <h1>Welcome</h1>
+                    <h1>Welcome to EventGuide</h1>
                     <EventShow showPage={this.state.showPage}/>
                     <Search handleChange={this.handleChange} />
                     {this.state.eventData.length ? (

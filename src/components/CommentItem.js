@@ -4,7 +4,7 @@ class CommentItem extends Component {
 render(){
     return(
         <div>
-            <p>Comment Item</p>
+            {/* <p>Comment Item</p> */}
         </div>
         )
     }
