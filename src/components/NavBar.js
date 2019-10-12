@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Menu } from 'semantic-ui-react'
 
+
 class NavBar extends Component {
     render(){
     return(
-        <Menu color='green'>
+        <Menu color='green inverted'>
             <Menu.Item 
                 name='Profile'
                 onClick={this.props.chooseUser}
